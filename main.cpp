@@ -37,9 +37,37 @@ int main(int argc,char** argv) {
 	return 0;
 }
 
+void draw_board(Checker* game) {
+	std::cout<<"\e[5;5H\e[33m1  2  3  4  5  6  7  8\e[23;5H1  2  3  4  5  6  7  8"
+		"\e[7;2HA\e[9;2HB\e[11;2HC\e[13;2HD\e[15;2HE\e[17;2HF\e[19;2HG\e[21;2HH"
+		"\e[7;29HA\e[9;29HB\e[11;29HC\e[13;29HD\e[15;29HE\e[17;29HF\e[19;29HG\e[21;29HH";
+	if(game) {
+	for(int l=6;l<22;l++) {
+		for(int c=4;c<28;c++) {
+			std::cout<<"\e["<<l<<";"<<c<<"H\e[4"<<((l-6)%4<2?((c-4)%6<3?7:0):((c-4)%6<3?0:7))<<"m";
+			if(((l-6)%4<2?(c-4)%6==4:(c-4)%6==1)&&(l-6)%2==0&&game->getField((l-6)/2,(c-4)/3)&&game->getField((l-6)/2,(c-4)/3)->king==false)
+				std::cout<<" ";
+			else if(((l-6)%4<2?(c-4)%6==4:(c-4)%6==1)) {
+				if(game->getField((l-6)/2,(c-4)/3)) {
+					std::cout<<"\e[1m\e[3"<<(game->getField((l-6)/2,(c-4)/3)->color==white?2:1);
+					std::cout<<((l-6)%2==0?(game->getField((l-6)/2,(c-4)/3)->king?"O":" "):"O");
+				} else
+					std::cout<<" ";
+			} else
+				std::cout<<" ";
+
+		}
+	}
+	} else
+		std::cout<<"\e[14;5H\e[1m\e[31mERROR! No current game!";
+	std::cout<<"\e[0m\e[24;1H";
+}
+
 void startgame(int players) {
 	std::cout<<"\e[H\e[J\e[1m\e[34m\e[1;30H*******************\e[2;31HChecker Board Game\e[3;30H*******************\e[0m\e[24;1H";
-
+	Checker* game=new Checker;
+	game->newgame();
+	draw_board(game);
 	//TODO: insert board drawing code here
 	
 	std::cin.getline(NULL,0);
