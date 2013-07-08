@@ -45,9 +45,7 @@ void draw_board(Checker* game) {
 	for(int l=6;l<22;l++) {
 		for(int c=4;c<28;c++) {
 			std::cout<<"\e["<<l<<";"<<c<<"H\e[4"<<((l-6)%4<2?((c-4)%6<3?7:0):((c-4)%6<3?0:7))<<"m";
-			if(((l-6)%4<2?(c-4)%6==4:(c-4)%6==1)&&(l-6)%2==0&&game->getField((l-6)/2,(c-4)/3)&&game->getField((l-6)/2,(c-4)/3)->king==false)
-				std::cout<<" ";
-			else if(((l-6)%4<2?(c-4)%6==4:(c-4)%6==1)) {
+			if(((l-6)%4<2?(c-4)%6==4:(c-4)%6==1)) {
 				if(game->getField((l-6)/2,(c-4)/3)) {
 					std::cout<<"\e[1m\e[3"<<(game->getField((l-6)/2,(c-4)/3)->color==white?2:1);
 					std::cout<<((l-6)%2==0?(game->getField((l-6)/2,(c-4)/3)->king?"O":" "):"O");
@@ -66,7 +64,6 @@ void draw_board(Checker* game) {
 void startgame(int players) {
 	std::cout<<"\e[H\e[J\e[1m\e[34m\e[1;30H*******************\e[2;31HChecker Board Game\e[3;30H*******************\e[0m\e[24;1H";
 	Checker* game=new Checker;
-	game->newgame();
 	draw_board(game);
 	//TODO: insert board drawing code here
 	
