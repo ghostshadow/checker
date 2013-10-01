@@ -1,3 +1,9 @@
+/****
+ * std_incl.hpp
+ * Checker Standart Include
+ * by ghostshadow
+ ****/
+
 #ifndef CHECK_STD_INCL__
 #define CHECK_STD_INCL__
 
@@ -16,3 +22,4 @@
 #include "board.hpp"
 
 #endif /*CHECK_STD_INCL__*/
+/*EOF: std_incl.hpp*/
