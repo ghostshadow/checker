@@ -13,12 +13,12 @@ void startgame(int);
 int main(int argc,char** argv) {
 	std::cout<<"\e[H\e[J\e[1m\e[34m*********************\n Welcome to Checker!\n*********************\n\e[0m\n";
 	bool retry;
-	char* tmp=(char*)malloc(80);
+	char* tmp=(char*)malloc(81);
 	int players;
 	do {
 		retry=false;
 		std::cout<<"please chose if you want to\nplay alone [1], play against another player [2] : ";
-		std::cin.getline(tmp,79);
+		std::cin.getline(tmp,80);
 		if(isdigit(tmp[0]))
 			players=atoi(tmp);
 		else
@@ -44,11 +44,11 @@ void draw_board(Checker* game) {
 	if(game) {
 	for(int l=6;l<22;l++) {
 		for(int c=4;c<28;c++) {
-			std::cout<<"\e["<<l<<";"<<c<<"H\e[4"<<((l-6)%4<2?((c-4)%6<3?7:0):((c-4)%6<3?0:7))<<"m";
-			if(((l-6)%4<2?(c-4)%6==4:(c-4)%6==1)) {
+			std::cout<<"\e["<<l<<";"<<c<<"H\e[4"<<((l-6)%4<2?((c-4)%6<3?0:7):((c-4)%6<3?7:0))<<"m";
+			if(((l-6)%4<2?(c-4)%6==1:(c-4)%6==4)) {
 				if(game->getField((l-6)/2,(c-4)/3)) {
-					std::cout<<"\e[1m\e[3"<<(game->getField((l-6)/2,(c-4)/3)->color==white?2:1);
-					std::cout<<((l-6)%2==0?(game->getField((l-6)/2,(c-4)/3)->king?"O":" "):"O");
+					std::cout<<"\e[1m\e[3"<<((game->getField((l-6)/2,(c-4)/3)->color==white)?2:1)<<"m";
+					std::cout<<(((l-6)%2==0)?((game->getField((l-6)/2,(c-4)/3)->king)?"O":" "):"O");
 				} else
 					std::cout<<" ";
 			} else
@@ -62,11 +62,34 @@ void draw_board(Checker* game) {
 }
 
 void startgame(int players) {
-	std::cout<<"\e[H\e[J\e[1m\e[34m\e[1;30H*******************\e[2;31HChecker Board Game\e[3;30H*******************\e[0m\e[24;1H";
 	Checker* game=new Checker;
-	draw_board(game);
-	//TODO: insert board drawing code here
-	
-	std::cin.getline(NULL,0);
+	bool running=true;
+	char *tmp=(char*)malloc(81);
+	while(running) {
+		std::cout<<"\e[H\e[J\e[1m\e[34m\e[1;30H*******************\e[2;31HChecker Board Game\e[3;30H*******************\e[0m\e[24;1H";
+		draw_board(game);
+		std::cout<<"\e[5;35H\e[40m\e[37mTurn has: \e[1m\e[3"<<(game->getTurn()==white?"2mwhite":"1mblack")<<"\e[39m\e[22m";
+		std::cout<<"\e[7;35H\e[40m\e[37mRemaining:\e[8;37H\e[1m\e[32mwhite "<<game->getRemaining(white);
+		std::cout<<"\e[9;37H\e[1m\e[31mblack "<<game->getRemaining(black);
+		std::cout<<"\e[11;35H\e[22m\e[37mLast Moves:";
+		std::cout<<"\e[24;1H\e[0m";
+		std::cin.getline(tmp,80);
+		if(0==strncasecmp("quit",tmp,4)||0==strncasecmp("q",tmp,1)||0==strncasecmp("exit",tmp,4)) {
+			running=false;
+			continue;
+		}
+		if(isalpha(tmp[0])&&isdigit(tmp[1])&&tmp[2]=='-'&&tmp[3]=='>'&&isalpha(tmp[4])&&isdigit(tmp[5])) {
+			try {
+				std::cout<<"Trying Move "<<(tmp[0]<0x5B?tmp[0]-0x41:tmp[0]-0x61)<<":"<<(tmp[1]-0x30)<<" -> "<<(tmp[4]<0x5B?tmp[4]-0x41:tmp[4]-0x61)<<":"<<(tmp[5]-0x30)<<"\n";
+				game->move(game->getTurn(),(tmp[0]<0x5B?tmp[0]-0x41:tmp[0]-0x61),(tmp[1]-0x30),(tmp[4]<0x5B?tmp[4]-0x41:tmp[4]-0x61),(tmp[5]-0x30));
+			}
+			catch(Checker::invalidTurn) {
+				std::cout<<"Invalid Turn!\n";
+				continue;
+			}
+			std::cout.flush();
+			std::cin.getline(NULL,0);
+		}
+	}
 	std::cout<<"\e[H\e[J\e[0m";
 }
