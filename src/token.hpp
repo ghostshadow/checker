@@ -4,6 +4,11 @@
  * by ghostshadow
  ****/
 
+#ifndef CHECK_TOKEN_INCL__
+#define CHECK_TOKEN_INCL__
+
+#include "std_incl.hpp"
+
 namespace Checker {
 
 enum tcolor{white=1,black};
@@ -20,4 +25,6 @@ public:
 	void set_curpos(std::valarray<int> *);
 };
 }
+
+#endif /*CHECK_TOKEN_INCL__*/
 /*EOF: token.hpp*/

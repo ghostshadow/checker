@@ -4,6 +4,11 @@
  * by ghostshadow
  ****/
 
+#ifndef CHECK_BOARD_INCL__
+#define CHECK_BOARD_INCL__
+
+#include "std_incl.hpp"
+
 namespace Checker {
 class Board {
 private:
@@ -14,4 +19,6 @@ public:
 	Token *remove_Token(std::valarray<int> *);
 };
 }
+
+#endif /*CHECK_BOARD_INCL__*/
 /*EOF: board.hpp*/
