@@ -14,6 +14,8 @@ class Board {
 private:
 	Token *board[8][8];
 public:
+	Board();
+	~Board();
 	void put_Token(std::valarray<int> *,Token *);
 	Token *get_Token(std::valarray<int> *);
 	Token *remove_Token(std::valarray<int> *);

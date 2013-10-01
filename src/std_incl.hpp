@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <cctype>
 #include <stdexcept>
+#include <exeption>
 #include <iostream>
 #include <new>
 #include <valarray>
