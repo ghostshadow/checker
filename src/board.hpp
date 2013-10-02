@@ -8,6 +8,7 @@
 #define CHECK_BOARD_INCL__
 
 #include "std_incl.hpp"
+#include "token.hpp"
 
 namespace Checker {
 class Board {

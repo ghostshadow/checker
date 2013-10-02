@@ -12,15 +12,11 @@
 #include <cstdlib>
 #include <cctype>
 #include <stdexcept>
-#include <exeption>
+#include <exception>
 #include <iostream>
 #include <new>
 #include <valarray>
 
-#include "check_err.hpp"
-#include "game.hpp"
-#include "token.hpp"
-#include "board.hpp"
 
 #endif /*CHECK_STD_INCL__*/
 /*EOF: std_incl.hpp*/

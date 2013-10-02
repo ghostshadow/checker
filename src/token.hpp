@@ -17,12 +17,15 @@ class Token {
 private:
 	bool king;
 	tcolor color;
-	std::valarray<int> curpos(2);
 public:
+	std::valarray<int> curpos;
+	
 	Token();
+	Token(tcolor);
 	~Token();
-	void move_to(std::valarray<int> *);
-	void set_curpos(std::valarray<int> *);
+	void upgrade();
+	tcolor get_Color();
+	bool is_King();
 };
 }
 
